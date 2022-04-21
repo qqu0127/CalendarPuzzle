@@ -32,6 +32,45 @@ public class Mask {
     return _shape;
   }
 
+  public int get(int row, int col) {
+    return _shape.get(row).get(col);
+  }
+
+  public int countHoles() {
+    List<List<Boolean>> visited = new ArrayList<>();
+    for (int i = 0; i < _height; i++) {
+      List<Boolean> row = new ArrayList<>();
+      for (int j = 0; j < _width; j++) {
+        row.add(false);
+      }
+      visited.add(row);
+    }
+
+    int cnt = 0;
+    for (int i = 0; i < _height; i++) {
+      for (int j = 0; j < _width; j++) {
+        if (visited.get(i).get(j) || get(i, j) != 0) {
+          continue;
+        }
+        flood(visited, i, j);
+        cnt++;
+      }
+    }
+    return cnt;
+  }
+
+  private void flood(List<List<Boolean>> visited, int row, int col) {
+    if (row >= _height || col >= _width || row < 0 || col < 0
+      || visited.get(row).get(col) || get(row, col) != 0) {
+      return;
+    }
+    visited.get(row).set(col, true);
+    flood(visited, row + 1, col);
+    flood(visited, row - 1, col);
+    flood(visited, row, col + 1);
+    flood(visited, row, col - 1);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -121,7 +160,11 @@ public class Mask {
     }
 
     public Mask build() {
-      return new Mask(_height, _width, _points, 0);
+      return build(0);
+    }
+
+    public Mask build(int baseVal) {
+      return new Mask(_height, _width, _points, baseVal);
     }
   }
 }
