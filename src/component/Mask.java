@@ -16,7 +16,6 @@ public class Mask {
   private int _width;
   private int _height;
   private List<List<Integer>> _shape;
-  private int _numPoints = 0;
 
   Mask(int height, int width, List<Pair<Integer, Integer>> points, int baseVal) {
     _width = width;
@@ -25,7 +24,12 @@ public class Mask {
     for (Pair<Integer, Integer> p : points) {
       _shape.get(p.getKey()).set(p.getValue(), 1 - baseVal);
     }
-    _numPoints = points.size();
+  }
+
+  Mask(int height, int width, List<List<Integer>> shape) {
+    _width = width;
+    _height = height;
+    _shape = shape;
   }
 
   public List<List<Integer>> getShape() {
@@ -36,7 +40,7 @@ public class Mask {
     return _shape.get(row).get(col);
   }
 
-  public int countHoles() {
+  public List<Integer> countHoles() {
     List<List<Boolean>> visited = new ArrayList<>();
     for (int i = 0; i < _height; i++) {
       List<Boolean> row = new ArrayList<>();
@@ -46,29 +50,36 @@ public class Mask {
       visited.add(row);
     }
 
-    int cnt = 0;
+    List<Integer> holes = new ArrayList<>();
     for (int i = 0; i < _height; i++) {
       for (int j = 0; j < _width; j++) {
         if (visited.get(i).get(j) || get(i, j) != 0) {
           continue;
         }
-        flood(visited, i, j);
-        cnt++;
+        holes.add(flood(visited, i, j));
       }
     }
-    return cnt;
+    return holes;
   }
 
-  private void flood(List<List<Boolean>> visited, int row, int col) {
+  private int flood(List<List<Boolean>> visited, int row, int col) {
     if (row >= _height || col >= _width || row < 0 || col < 0
       || visited.get(row).get(col) || get(row, col) != 0) {
-      return;
+      return 0;
     }
     visited.get(row).set(col, true);
-    flood(visited, row + 1, col);
-    flood(visited, row - 1, col);
-    flood(visited, row, col + 1);
-    flood(visited, row, col - 1);
+    return 1 + flood(visited, row + 1, col)
+      + flood(visited, row - 1, col)
+      + flood(visited, row, col + 1)
+      + flood(visited, row, col - 1);
+  }
+
+  public Mask clone() {
+    List<List<Integer>> shape = new ArrayList<>();
+    for (List<Integer> row : _shape) {
+      shape.add(new ArrayList<>(row));
+    }
+    return new Mask(_height, _width, shape);
   }
 
   @Override
@@ -82,13 +93,12 @@ public class Mask {
     Mask mask = (Mask) o;
     return _width == mask._width &&
       _height == mask._height &&
-      _numPoints == mask._numPoints &&
-      Objects.equals(_shape, mask._shape);
+      _shape.equals(mask._shape);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(_width, _height, _shape, _numPoints);
+    return Objects.hash(_width, _height, _shape);
   }
 
   public int getWidth() {
@@ -97,10 +107,6 @@ public class Mask {
 
   public int getHeight() {
     return _height;
-  }
-
-  public int getNumPoints() {
-    return _numPoints;
   }
 
   public void print() {
@@ -153,11 +159,6 @@ public class Mask {
       return this;
     }
 
-    public void print() {
-      for (Pair p : _points) {
-        System.out.println(p);
-      }
-    }
 
     public Mask build() {
       return build(0);

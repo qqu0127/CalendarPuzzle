@@ -3,8 +3,8 @@ package component;
 
 public class Table {
 
-  public static final int WIDTH = 7;
-  public static final int HEIGHT = 8;
+  private static final int WIDTH = 7;
+  private static final int HEIGHT = 8;
 
   public static void main(String[] args) {
     Mask table = getInitialState();
@@ -39,7 +39,6 @@ public class Table {
 
   public static Mask createDestState(int[][] points) {
     Mask.Builder builder = new Mask.Builder(HEIGHT, WIDTH);
-
     for (int[] p : points) {
       builder.addPoint(p[0], p[1]);
     }

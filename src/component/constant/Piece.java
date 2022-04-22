@@ -1,4 +1,6 @@
-package component;
+package component.constant;
+
+import component.Mask;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -74,6 +76,7 @@ public enum Piece {
     .addPoint(1, 1)
     .addPoint(1, 2));
 
+  public static final int MIN_SIZE = 4;
   private Set<Mask> _shapes;
 
   Piece(Mask.Builder builder) {
@@ -82,13 +85,6 @@ public enum Piece {
 
   public List<Mask> getShapes() {
     return new ArrayList<>(_shapes);
-  }
-
-  public void print() {
-    for (Mask m : getShapes()) {
-      m.print();
-      System.out.println("==========");
-    }
   }
 
   private static Set<Mask> createShapes(Mask.Builder input) {
