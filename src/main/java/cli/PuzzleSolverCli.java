@@ -10,14 +10,11 @@ import controller.TableSearcher;
 
 import java.util.EnumSet;
 
-import static component.constant.Day.FRI;
-
 public class PuzzleSolverCli {
-
 
   public static void main(String[] args) {
     long time = System.currentTimeMillis();
-    run(Month.APR, FRI, 29);
+    run(Month.valueOf(args[0]), Day.valueOf(args[2]), Integer.parseInt(args[1]));
     time = System.currentTimeMillis() - time;
     System.out.println("Found solution in " + time + " ms.");
   }
