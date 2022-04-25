@@ -1,7 +1,5 @@
-package controller;
+package component;
 
-import component.Mask;
-import component.Table;
 import component.constant.Day;
 import component.constant.Month;
 

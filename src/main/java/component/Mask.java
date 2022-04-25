@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
  */
 public class Mask {
 
-  private int _width;
-  private int _height;
-  private List<List<Integer>> _shape;
+  private final int _width;
+  private final int _height;
+  private final List<List<Integer>> _shape;
 
   Mask(int height, int width, List<Pair<Integer, Integer>> points, int baseVal) {
     _width = width;
@@ -72,14 +72,6 @@ public class Mask {
       + flood(visited, row - 1, col)
       + flood(visited, row, col + 1)
       + flood(visited, row, col - 1);
-  }
-
-  public Mask clone() {
-    List<List<Integer>> shape = new ArrayList<>();
-    for (List<Integer> row : _shape) {
-      shape.add(new ArrayList<>(row));
-    }
-    return new Mask(_height, _width, shape);
   }
 
   @Override
