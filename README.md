@@ -24,22 +24,28 @@ The average runtime (for single input) is ~500ms.
 
 ### Dependencies
 
+* java 1.8+
 * maven
 
 ### Installing
 
 * Clone the project
-* Build project with
+* Use pre-built binary
+  * ```
+      chmod +x bin/solver.sh
+      ./bin/solver.sh <MONTH> <DAY> <DATE>
+    ```
+* Build from source
     ```
     mvn clean package
     ```
-* Run commandline
-    ```
-    java -cp target/CalendarPuzzle-1.0.jar cli.PuzzleSolverCli <MONTH> <DAY> <DATE>
+  * Run commandline
+      ```
+      java -cp target/CalendarPuzzle-1.0.jar cli.PuzzleSolverCli <MONTH> <DAY> <DATE>
 
-    e.g.
-    java -cp target/CalendarPuzzle-1.0.jar cli.PuzzleSolverCli APR 15 FRI
-    ```
+      e.g.
+      java -cp target/CalendarPuzzle-1.0.jar cli.PuzzleSolverCli APR 15 FRI
+      ```
 ### Help
 
 Both table and puzzle pieces are indexed from upperleft corner.
