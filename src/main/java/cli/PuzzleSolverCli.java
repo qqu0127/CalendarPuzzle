@@ -14,7 +14,9 @@ public class PuzzleSolverCli {
 
   public static void main(String[] args) {
     long time = System.currentTimeMillis();
-    run(Month.valueOf(args[0]), Day.valueOf(args[2]), Integer.parseInt(args[1]));
+    run(Month.valueOf(args[0].toUpperCase()),
+      Day.valueOf(args[2].toUpperCase()),
+      Integer.parseInt(args[1]));
     time = System.currentTimeMillis() - time;
     System.out.println("Found solution in " + time + " ms.");
   }
