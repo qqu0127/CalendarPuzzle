@@ -77,6 +77,8 @@ public enum Piece {
     .addPoint(1, 2));
 
   public static final int MIN_SIZE = 4;
+  public static final int MAX_SIZE = 5;
+
   private Set<Mask> _shapes;
 
   Piece(Mask.Builder builder) {

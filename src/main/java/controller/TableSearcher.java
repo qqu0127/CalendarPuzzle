@@ -1,5 +1,6 @@
 package controller;
 
+import component.CalendarUtil;
 import component.Mask;
 import component.constant.Piece;
 
@@ -28,7 +29,7 @@ public class TableSearcher {
     List<Integer> holes = _manager.getTable().countHoles();
     if (holes.size() > pieces.size()
       // cutting edge with connectivity check
-      || holes.stream().min(Integer::compareTo).get() < Piece.MIN_SIZE) {
+      || CalendarUtil.earlyReject(holes)) {
       return null;
     }
 
